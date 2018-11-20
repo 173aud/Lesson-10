@@ -20,7 +20,7 @@ public class Student_Array extends javax.swing.JFrame {
      */
     
     ArrayList<Human> f=new ArrayList();
-    DefaultListModel list;
+    DefaultListModel list=new DefaultListModel();
     
     public Student_Array() {
         initComponents();
@@ -290,8 +290,7 @@ public class Student_Array extends javax.swing.JFrame {
         
    
         String delstu=listhuman.getSelectedValue();
-        
-            delstu=listhuman.getSelectedValue();
+                    
         if(delstu==null){
             JOptionPane.showMessageDialog(this,"You Must Select a Student to Delete");
             return;
@@ -302,15 +301,15 @@ public class Student_Array extends javax.swing.JFrame {
         // Remove from f and list
         f.remove(loc);
         list.removeElementAt(loc);
-        
-        
+         
+       
         
     }//GEN-LAST:event_menudeleteActionPerformed
-
+/*
     private void rbnmaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbnmaleActionPerformed
-        
-    }//GEN-LAST:event_rbnmaleActionPerformed
 
+    }//GEN-LAST:event_rbnmaleActionPerformed
+*/
     /**
      * @param args the command line arguments
      */
