@@ -11,11 +11,14 @@ package Remove_Array_List;
  */
 public class Human implements Comparable<Human>{
     private String name;
+    private String sex;
     private int age;
     
-    public Human(String n,int a){
+    public Human(String n, String s, int a){
         name=n;
+        sex=s;
         age=a;
+        
     }
 
     @Override
@@ -35,6 +38,12 @@ public class Human implements Comparable<Human>{
         return age;
     }
     
+    public void setSex(String s){
+        sex=s;
+    }
     
+    public String getSex(){
+        return sex;
+    }
     
 }

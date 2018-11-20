@@ -19,22 +19,22 @@ public class Student_Array extends javax.swing.JFrame {
      * Creates new form Fruit_Array
      */
     
-    ArrayList<String> f=new ArrayList();
+    ArrayList<Human> f=new ArrayList();
     DefaultListModel list;
     
     public Student_Array() {
         initComponents();
         listhuman.setModel(list);
         //Add Fruits to List
-        f.add("Brochin, Maxim", 16);
-        f.add("Davis, Indiana", 17);
-        f.add("DeSimone, Christian", 17);
-        f.add("Dybek, Arthur", 17);
-        f.add("Stewart, Felix", 17);
+        f.add(new Human("Brochin, Maxim", "Male", 16));
+        f.add(new Human("Davis, Indiana", "Male", 17));
+        f.add(new Human("DeSimone, Christian", "Male", 17));
+        f.add(new Human("Dybek, Arthur", "Male", 17));
+        f.add(new Human("Stewart, Felix", "Male", 17));
         
         //Add fruits to list model
-        for (String fruit : f) {
-            list.addElement(fruit);
+        for (Human human : f) {
+            list.addElement(human);
         }
         
         
@@ -47,12 +47,12 @@ public class Student_Array extends javax.swing.JFrame {
         
     }
 
-    public static int search (ArrayList[] a, Object searchValue){
+    public static int search (ArrayList a, Object searchValue){
 	   int left = 0;
-	   int right = a.length-1;
+	   int right = a.size()-1;
 	   while (left <= right){
 	      int midpoint = (left + right) / 2;
-	      int result = ((Comparable)a[midpoint]).compareTo(searchValue); 
+	      int result = ((Comparable)a.get(midpoint)).compareTo(searchValue); 
 	      if (result == 0)
 	         return midpoint;
 	      else if (result < 0)
@@ -64,22 +64,22 @@ public class Student_Array extends javax.swing.JFrame {
 		   
 }
     
-    public static int findInsertPoint (ArrayList a[], Object searchValue){
+    public static int findInsertPoint (ArrayList a, Object searchValue){
 	   int left = 0;
-	   int right = a.length-1;
+	   int right = a.size()-1;
 	   int midpoint=0;
 	   
 	   while (left <= right){
 	      midpoint = (left + right) / 2;
 	   
-	      int result = ((Comparable)a[midpoint]).compareTo(searchValue); 
+	      int result = ((Comparable)a.get(midpoint)).compareTo(searchValue); 
 	   
 	     if (result < 0)
 	         left = midpoint + 1;
 	      else
 	         right = midpoint-1;
 	   }
-	   if(((Comparable)a[midpoint]).compareTo(searchValue) < 0)
+	   if(((Comparable)a.get(midpoint)).compareTo(searchValue) < 0)
 	   midpoint++;
 	   return midpoint;	   
 }
@@ -107,8 +107,8 @@ public class Student_Array extends javax.swing.JFrame {
         txtname = new javax.swing.JTextField();
         txtage = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rbnmale = new javax.swing.JRadioButton();
+        rbnfemale = new javax.swing.JRadioButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         menuexit = new javax.swing.JMenuItem();
@@ -142,11 +142,16 @@ public class Student_Array extends javax.swing.JFrame {
 
         txtage.setEditable(false);
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Male");
+        buttonGroup1.add(rbnmale);
+        rbnmale.setText("Male");
+        rbnmale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbnmaleActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Female");
+        buttonGroup1.add(rbnfemale);
+        rbnfemale.setText("Female");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -154,9 +159,9 @@ public class Student_Array extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rbnmale, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton2)
+                .addComponent(rbnfemale)
                 .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
@@ -164,8 +169,8 @@ public class Student_Array extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(rbnmale)
+                    .addComponent(rbnfemale))
                 .addGap(20, 20, 20))
         );
 
@@ -273,27 +278,27 @@ public class Student_Array extends javax.swing.JFrame {
     }//GEN-LAST:event_menuaboutActionPerformed
 
     private void menuaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuaddActionPerformed
-        String newfruit=JOptionPane.showInputDialog(this, "Enter Fruit to Add");
-        int loc=findInsertPoint(f, newfruit);
+        Human human=new Human(txtname.getText(), buttonGroup1.getSelection().getActionCommand(), Integer.parseInt(txtage.getText()));
+        int loc=findInsertPoint(f, human);
         //Add to Both the ArrayList and the List Model
-        f.add(loc, newfruit);
-        list.add(loc,newfruit);
+        f.add(loc, human);
+        list.add(loc, human);
     }//GEN-LAST:event_menuaddActionPerformed
 
     private void menudeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menudeleteActionPerformed
         // Get the selected fruit
         
    
-        String delfruit=listhuman.getSelectedValue();
+        String delstu=listhuman.getSelectedValue();
         
-            delfruit=listhuman.getSelectedValue();
-        if(delfruit==null){
-            JOptionPane.showMessageDialog(this,"You Must Select a Fruit to Delete");
+            delstu=listhuman.getSelectedValue();
+        if(delstu==null){
+            JOptionPane.showMessageDialog(this,"You Must Select a Student to Delete");
             return;
         }
         
         // Find it in the ArrayList
-        int loc=search(f,delfruit);
+        int loc=search(f,delstu);
         // Remove from f and list
         f.remove(loc);
         list.removeElementAt(loc);
@@ -301,6 +306,10 @@ public class Student_Array extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_menudeleteActionPerformed
+
+    private void rbnmaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbnmaleActionPerformed
+        
+    }//GEN-LAST:event_rbnmaleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -352,8 +361,6 @@ public class Student_Array extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> listhuman;
     private javax.swing.JMenuItem menuabout;
@@ -361,6 +368,8 @@ public class Student_Array extends javax.swing.JFrame {
     private javax.swing.JMenuItem menudelete;
     private javax.swing.JMenu menuedit;
     private javax.swing.JMenuItem menuexit;
+    private javax.swing.JRadioButton rbnfemale;
+    private javax.swing.JRadioButton rbnmale;
     private javax.swing.JTextField txtage;
     private javax.swing.JTextField txtname;
     // End of variables declaration//GEN-END:variables
